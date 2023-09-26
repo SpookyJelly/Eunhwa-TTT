@@ -4,8 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@babylonjs/core": "^6.18.0",
+    "@babylonjs/inspector": "^6.18.0",
+    "@babylonjs/loaders": "^6.18.0",
+    "@babylonjs/materials": "^6.18.0",
+    "@types/yuka": "^0.7.1",
+    "vite": "^4.4.9",
+    "yuka": "^0.7.8"
+  }
 }
