@@ -21,9 +21,8 @@ import {
   HemisphericLight,
 } from "@babylonjs/core";
 import { animationVectorArr, boxPositions } from "../constants";
-import sum from "../assets/sample.jpg";
+import eunhwaBG from "../assets/sample.jpg";
 import "@babylonjs/loaders";
-//import { PBRCustomMaterial} from "@babylonjs/materials";
 
 export function mainScene(engine: Engine) {
   const canvas = engine.getRenderingCanvas();
@@ -174,23 +173,43 @@ export function mainScene(engine: Engine) {
     shoot(mesh, 60, 120, animationVectorArr[index], mesh.position);
   });
 
+  // Eunhwa Background
+
   const ground = CreateGround("ground", { width: 3, height: 3 }, scene);
 
   const groundMat = new StandardMaterial("ground", scene);
 
-  //const groundMat = new PBRMaterial("ground", scene);
-  groundMat.ambientTexture = new Texture(sum, scene);
-  // groundMat.specularColor = new Color3(0, 0, 0);
+  groundMat.ambientTexture = new Texture(eunhwaBG, scene);
 
   ground.position.x = 1.1;
   ground.position.y = 0.9;
   ground.position.z = -1.1;
+
+  // light for shading
   const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
   light.intensity = 0.7;
 
   ground.material = groundMat;
   ground.visibility = 0.5;
 
+  //make fading animation
+  const fade = new Animation(
+    "fade",
+    "visibility",
+    60,
+    Animation.ANIMATIONTYPE_FLOAT,
+    Animation.ANIMATIONLOOPMODE_CONSTANT
+  );
+
+  const keyFrames = [
+    { frame: 0, value: 0 },
+    { frame: 120, value: 0 },
+    { frame: 180, value: 0.5 },
+  ];
+  fade.setKeys(keyFrames);
+
+  ground.animations.push(fade);
+  scene.beginAnimation(ground, 0, 180, true);
   return scene;
 }
 
