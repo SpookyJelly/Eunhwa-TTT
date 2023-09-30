@@ -84,12 +84,13 @@ export function mainScene(engine: Engine) {
   protoMaterial.roughness = 0.15;
   protoMaterial.alpha = 1;
   proto.material = protoMaterial;
+  proto.visibility = 0.6;
   proto.isVisible = false;
 
   const allBoxes = new TransformNode("allBoxes", scene);
 
   function putBoxes(index: number) {
-    const box = proto.createInstance(`box${index}`);
+    const box = proto.createInstance(`${index}`);
     box.parent = allBoxes;
     box.position = getBoxPosition(index);
   }
@@ -169,7 +170,7 @@ export function mainScene(engine: Engine) {
   };
 
   boxPositions.forEach((_, index: number) => {
-    const mesh = scene.getMeshByName(`box${index}`) as Mesh;
+    const mesh = scene.getMeshByName(`${index}`) as Mesh;
     shoot(mesh, 60, 120, animationVectorArr[index], mesh.position);
   });
 
@@ -182,7 +183,7 @@ export function mainScene(engine: Engine) {
   groundMat.ambientTexture = new Texture(eunhwaBG, scene);
 
   ground.position.x = 1.1;
-  ground.position.y = 0.9;
+  ground.position.y = 0.4;
   ground.position.z = -1.1;
 
   // light for shading
@@ -213,7 +214,7 @@ export function mainScene(engine: Engine) {
   return scene;
 }
 
-function getBoxPosition(order: number) {
+export function getBoxPosition(order: number) {
   return new Vector3(
     boxPositions[order][0],
     boxPositions[order][1],
